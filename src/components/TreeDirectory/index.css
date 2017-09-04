@@ -1,0 +1,33 @@
+.TreeDirectory{
+    overflow: auto;
+    height: calc(100vh - 64px);
+    margin-top: 64px;
+    position: fixed;
+    left: 0;
+    background: #fff;
+    /*width: calc(100% - 18px);*/
+    width: 20%;
+    border-right:solid 1px #eee;
+}
+
+.TreeDirectory .ant-tree-node-content-wrapper {
+    width: calc(100% - 24px);
+}
+.TreeDirectory .ant-tree-iconEle{
+    color: #1cb7ff;
+}
+.TreeDirectory .ant-tree-icon__open:before {
+    content: "\E699";
+    display: block;
+    font-family: "anticon" !important;
+}
+.TreeDirectory .ant-tree-icon__close:before {
+    content: "\E662";
+    display: block;
+    font-family: "anticon" !important;
+}
+.TreeDirectory .ant-tree-icon__docu:before {
+    content: "\E664";
+    display: block;
+    font-family: "anticon" !important;
+}

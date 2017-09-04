@@ -1,0 +1,23 @@
+
+.EditArea{
+    overflow: auto;
+    height: calc(100vh - 64px);
+    margin-top: 64px;
+    position: fixed;
+    left: 50%;
+    background: #fff;
+    width: 50%;
+}
+.EditArea .head{
+    width: 100%;
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+}
+.EditArea .head .Search{
+    width: 80%;
+}
+.EditArea .head .icon{
+    width: 20%;
+    margin: 0 auto;
+    font-size: 16px;
+}

@@ -1,0 +1,14 @@
+
+.HeadBar{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    line-height: normal;
+}
+
+.HeadBar .icon {
+    position: relative;
+    margin: 5px;
+    font-size: 16px;
+    color: #fff;
+}
