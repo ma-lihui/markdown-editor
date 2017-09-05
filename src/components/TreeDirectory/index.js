@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Tree } from 'antd';
+import {Layout, Tree, Icon, Menu, Dropdown, Button} from 'antd';
+const {Header, Content, Footer, Sider} = Layout;
 import './index.css'
 const TreeNode = Tree.TreeNode;
+const SubMenu = Menu.SubMenu;
 
 const x = 3;
 const y = 2;
@@ -35,6 +37,7 @@ export  default class TreeDirectory extends Component {
   state = {
     gData,
     expandedKeys: ['0-0', '0-0-0', '0-0-0-0'],
+    collapsed: false,
   };
   onDragEnter = (info) => {
     console.log(info);
@@ -89,6 +92,11 @@ export  default class TreeDirectory extends Component {
       gData: data,
     });
   };
+  toggleCollapsed = () => {
+    this.setState({
+      collapsed: !this.state.collapsed,
+    });
+  };
   render() {
     const loop = data => data.map((item) => {
       if (item.children && item.children.length) {
@@ -96,17 +104,62 @@ export  default class TreeDirectory extends Component {
       }
       return <TreeNode key={item.key} title={item.key} />;
     });
+    const menu = (
+      <Menu>
+        <Menu.Item key="0">新建笔记</Menu.Item>
+        <Menu.Item key="1">新建MarkDown</Menu.Item>
+        <Menu.Item key="2">新建文件夹</Menu.Item>
+      </Menu>
+    );
     return (
-      <Tree
-        className="draggable-tree TreeDirectory"
-        defaultExpandedKeys={this.state.expandedKeys}
-        draggable
-        onDragEnter={this.onDragEnter}
-        onDrop={this.onDrop}
-        showIcon
-      >
-        {loop(this.state.gData)}
-      </Tree>
+      <Layout className="TreeDirectory">
+        <Header className="head">
+          <Dropdown overlay={menu} trigger={['click']}>
+            <a className="ant-dropdown-link" href="#">
+              <Icon className="icon plus" type="plus" />
+              新建 <Icon className="icon caret-down" type="caret-down" />
+            </a>
+          </Dropdown>
+        </Header>
+        <Content>
+          <Button type="primary" onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
+            <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
+          </Button>
+          <Menu
+            defaultSelectedKeys={['1']}
+            defaultOpenKeys={['sub1']}
+            mode="inline"
+            theme="lite"
+            inlineCollapsed={this.state.collapsed}
+            className="menu-list">
+            <SubMenu key="sub1" title={<span><Icon type="inbox" /><span>我的文件夹</span></span>}>
+              <Menu.Item key="11">
+                <Tree
+                  className="draggable-tree"
+                  defaultExpandedKeys={this.state.expandedKeys}
+                  draggable
+                  onDragEnter={this.onDragEnter}
+                  onDrop={this.onDrop}
+                  showIcon
+                >
+                  {loop(this.state.gData)}
+                </Tree>
+              </Menu.Item>
+            </SubMenu>
+            <Menu.Item key="sub2">
+              <Icon type="star" /><span>收藏</span>
+            </Menu.Item>
+            <Menu.Item key="sub3">
+              <Icon type="pushpin" /><span>便签</span>
+            </Menu.Item>
+            <Menu.Item key="sub4">
+              <Icon type="delete" /><span>回收站</span>
+            </Menu.Item>
+          </Menu>
+
+        </Content>
+
+      </Layout>
     );
   }
 }

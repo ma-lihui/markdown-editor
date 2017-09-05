@@ -1,20 +1,40 @@
 .TreeDirectory{
     overflow: auto;
     height: calc(100vh - 64px);
-    margin-top: 64px;
-    position: fixed;
-    left: 0;
     background: #fff;
-    /*width: calc(100% - 18px);*/
-    width: 20%;
     border-right:solid 1px #eee;
 }
+.TreeDirectory .head  a:focus{
+    text-decoration: none;
+}
+
+.TreeDirectory .head .icon.plus{
+    color: #14a2ff;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 0 5px;
+}
+.TreeDirectory .head .icon.caret-down{
+    color: #aaa;
+    font-size: 8px;
+}
+.TreeDirectory .head{
+    width: 100%;
+    background: #fff;
+    border-bottom:solid 1px #eee;
+}
+.TreeDirectory .menu-list .ant-menu-item{
+    height: auto;
+}
+
 
 .TreeDirectory .ant-tree-node-content-wrapper {
     width: calc(100% - 24px);
 }
 .TreeDirectory .ant-tree-iconEle{
     color: #1cb7ff;
+    font-size: 16px;
+    font-weight: 500;
 }
 .TreeDirectory .ant-tree-icon__open:before {
     content: "\E699";
