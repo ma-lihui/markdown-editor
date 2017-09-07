@@ -11,8 +11,15 @@
     padding: 0 10px;
     border-bottom: 1px solid #eee;
 }
+.ContentList .head .trigger{
+    width: 50px;
+    margin: 0 auto;
+    font-size: 20px;
+    vertical-align: middle;
+    color: #888;
+}
 .ContentList .head .Search{
-    width: calc(100% - 50px);
+    width: calc(100% - 100px);
     margin-right: 10px;
 }
 .ContentList .head .ant-dropdown-link{

@@ -1,8 +1,13 @@
 .TreeDirectory{
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     height: calc(100vh - 64px);
     background: #fff;
     border-right:solid 1px #eee;
+}
+.TreeDirectory .head{
+    text-align: center;
+    padding: 0;
 }
 .TreeDirectory .head  a:focus{
     text-decoration: none;
@@ -13,6 +18,7 @@
     font-weight: bold;
     font-size: 18px;
     margin: 0 5px;
+    vertical-align: middle;
 }
 .TreeDirectory .head .icon.caret-down{
     color: #aaa;
@@ -26,7 +32,12 @@
 .TreeDirectory .menu-list .ant-menu-item{
     height: auto;
 }
-
+.TreeDirectory .menu-list{
+    border-right: none;
+}
+.TreeDirectory .menu-list .ant-menu-item{
+    left: 0;
+}
 
 .TreeDirectory .ant-tree-node-content-wrapper {
     width: calc(100% - 24px);
@@ -51,3 +62,4 @@
     display: block;
     font-family: "anticon" !important;
 }
+

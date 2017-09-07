@@ -14,30 +14,33 @@ const url = require('url');
 let mainWindow;
 
 function createWindow() {
-    // Create the browser window.
-    mainWindow = new BrowserWindow({
-      width: 1120,
-      height: 700,
-      // frame: false
-    });
+  // Create the browser window.
+  mainWindow = new BrowserWindow({
+    width: 1120,
+    height: 700,
+    frame: false,
+    hasShadow: true,
+    titleBarStyle: 'hiddenInset',
+  });
 
-    // and load the index.html of the app.
-    const startUrl = process.env.ELECTRON_START_URL || url.format({
-            pathname: path.join(__dirname, '/../build/index.html'),
-            protocol: 'file:',
-            slashes: true
-        });
-    mainWindow.loadURL(startUrl);
-    // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
+  // and load the index.html of the app.
+  const startUrl = process.env.ELECTRON_START_URL || url.format({
+    pathname: path.join(__dirname, '/../build/index.html'),
+    protocol: 'file:',
+    slashes: true
+  });
+  mainWindow.loadURL(startUrl);
+  // Open the DevTools.
+  // mainWindow.webContents.openDevTools();
 
-    // Emitted when the window is closed.
-    mainWindow.on('closed', function () {
-        // Dereference the window object, usually you would store windows
-        // in an array if your app supports multi windows, this is the time
-        // when you should delete the corresponding element.
-        mainWindow = null
-    })
+  // Emitted when the window is closed.
+  mainWindow.on('closed', function () {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    mainWindow = null
+  });
+  registShortcut();
 }
 
 // This method will be called when Electron has finished
@@ -47,47 +50,50 @@ app.on('ready', createWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
-    // On OS X it is common for applications and their menu bar
-    // to stay active until the user quits explicitly with Cmd + Q
-    if (process.platform !== 'darwin') {
-        app.quit()
-    }
+  // On OS X it is common for applications and their menu bar
+  // to stay active until the user quits explicitly with Cmd + Q
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
 });
 
 app.on('activate', function () {
-    // On OS X it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (mainWindow === null) {
-        createWindow()
-    }
+  // On OS X it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (mainWindow === null) {
+    createWindow()
+  }
 });
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
 //communicate with render process
-ipc.on('quit-app',function () {
+ipc.on('quit-app', function () {
   app.quit();
 });
-ipc.on('close-win',function () {
+ipc.on('close-win', function () {
   mainWindow.close();
 });
-ipc.on('maximize-win',function () {
-  if(mainWindow.isMaximized()) {
+ipc.on('maximize-win', function () {
+  if (mainWindow.isMaximized()) {
     mainWindow.unmaximize();
-  }else {
+  } else {
     mainWindow.maximize();
   }
 });
-ipc.on('minimize-win',function () {
+ipc.on('minimize-win', function () {
   mainWindow.minimize();
 });
 
 //shortcut
-globalShortcut.register('f12', function () {
-  if(mainWindow.webContents.isDevToolsOpened()) {
-    mainWindow.webContents.closeDevTools();
-  }else {
-    mainWindow.webContents.openDevTools();
-  }
-});
+function registShortcut(){
+  globalShortcut.register('ctrl+shift+f12', function () {
+    if (mainWindow.webContents.isDevToolsOpened()) {
+      mainWindow.webContents.closeDevTools();
+    } else {
+      mainWindow.webContents.openDevTools();
+    }
+  });
+}
+

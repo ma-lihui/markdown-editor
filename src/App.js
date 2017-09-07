@@ -14,6 +14,14 @@ const {Header, Content, Footer, Sider} = Layout;
 
 
 class App extends Component {
+  state = {
+    collapsed: false,
+  };
+  toggleSider = () => {
+    this.setState({
+      collapsed: !this.state.collapsed,
+    });
+  };
   render() {
     return (
       <Layout style={{minHeight: '100vh'}}>
@@ -25,11 +33,11 @@ class App extends Component {
           <HeadBar/>
         </Header>
         <Layout style={{background: '#fff'}}>
-          <Sider style={{background: '#fff'}} collapsible collapsedWidth="64">
-            <TreeDirectory/>
+          <Sider style={{background: '#fff'}} trigger={null} collapsible collapsed={this.state.collapsed} collapsedWidth="64">
+            <TreeDirectory collapsed={this.state.collapsed}/>
           </Sider>
           <Sider width={300}>
-            <ContentList/>
+            <ContentList toggleSider={this.toggleSider} collapsed={this.state.collapsed}/>
           </Sider>
           <Content><EditArea/></Content>
         </Layout>

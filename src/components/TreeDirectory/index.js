@@ -112,27 +112,24 @@ export  default class TreeDirectory extends Component {
       </Menu>
     );
     return (
-      <Layout className="TreeDirectory">
+      <Layout className="TreeDirectory scrollbar">
         <Header className="head">
           <Dropdown overlay={menu} trigger={['click']}>
             <a className="ant-dropdown-link" href="#">
               <Icon className="icon plus" type="plus" />
-              新建 <Icon className="icon caret-down" type="caret-down" />
+              {!this.props.collapsed?<span>新建<Icon className="icon caret-down" type="caret-down" /></span> :''}
             </a>
           </Dropdown>
         </Header>
         <Content>
-          <Button type="primary" onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
-            <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
-          </Button>
           <Menu
             defaultSelectedKeys={['1']}
             defaultOpenKeys={['sub1']}
             mode="inline"
-            theme="lite"
-            inlineCollapsed={this.state.collapsed}
+            theme="light"
+            inlineCollapsed={this.props.collapsed}
             className="menu-list">
-            <SubMenu key="sub1" title={<span><Icon type="inbox" /><span>我的文件夹</span></span>}>
+            <SubMenu  key="sub1" title={<span><Icon type="inbox" /><span>我的文件夹</span></span>}>
               <Menu.Item key="11">
                 <Tree
                   className="draggable-tree"

@@ -6,6 +6,9 @@ import './index.css'
 const Search = Input.Search;
 
 export default class ContentList extends Component{
+  toggle = () => {
+    this.props.toggleSider();
+  };
   render(){
     const menu = (
       <Menu>
@@ -18,6 +21,11 @@ export default class ContentList extends Component{
     return (
       <Layout style={{background: '#fff'}} className="ContentList">
         <Header className="head">
+          <Icon
+            className="trigger"
+            type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'}
+            onClick={this.toggle}
+          />
           <Search
             className="Search"
             placeholder="input search text"
