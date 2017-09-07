@@ -22,7 +22,9 @@
 }
 .TreeDirectory .head .icon.caret-down{
     color: #aaa;
-    font-size: 8px;
+    font-size: 6px;
+    margin-left: 3px;
+    vertical-align: middle;
 }
 .TreeDirectory .head{
     width: 100%;

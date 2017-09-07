@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import Scrollbar from 'react-perfect-scrollbar';
-// import Scrollbar from 'react-custom-scrollbars';
-// import Scrollbar from 'react-scrollbar';
+import Scrollbar from 'smooth-scrollbar';
 import logo from './logo.svg';
 import './App.css';
 import HeadBar from './components/HeadBar'
@@ -17,6 +15,15 @@ class App extends Component {
   state = {
     collapsed: false,
   };
+
+  componentDidMount(){
+      Scrollbar.initAll({
+          speed: 3,
+          damping: 0.2,
+          overscrollEffect: 'bounce'
+      });
+  }
+
   toggleSider = () => {
     this.setState({
       collapsed: !this.state.collapsed,

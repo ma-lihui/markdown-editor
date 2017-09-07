@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Layout, Tree, Icon, Menu, Dropdown, Button} from 'antd';
+import 'smooth-scrollbar/dist/smooth-scrollbar.css'
 const {Header, Content, Footer, Sider} = Layout;
 import './index.css'
 const TreeNode = Tree.TreeNode;
@@ -39,6 +40,7 @@ export  default class TreeDirectory extends Component {
     expandedKeys: ['0-0', '0-0-0', '0-0-0-0'],
     collapsed: false,
   };
+
   onDragEnter = (info) => {
     console.log(info);
     // expandedKeys 需要受控时设置
@@ -112,7 +114,7 @@ export  default class TreeDirectory extends Component {
       </Menu>
     );
     return (
-      <Layout className="TreeDirectory scrollbar">
+      <Layout data-scrollbar className="TreeDirectory scrollbar">
         <Header className="head">
           <Dropdown overlay={menu} trigger={['click']}>
             <a className="ant-dropdown-link" href="#">
