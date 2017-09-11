@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Layout, Tree, Icon, Menu, Dropdown, Button} from 'antd';
-import 'smooth-scrollbar/dist/smooth-scrollbar.css'
 const {Header, Content, Footer, Sider} = Layout;
+import {getData} from '../../common'
 import './index.css'
 const TreeNode = Tree.TreeNode;
 const SubMenu = Menu.SubMenu;
@@ -99,6 +99,9 @@ export  default class TreeDirectory extends Component {
       collapsed: !this.state.collapsed,
     });
   };
+  onSelectHandle = ({item, key, selectedKeys}) => {
+    this.props.changeDirectory(getData());
+  };
   render() {
     const loop = data => data.map((item) => {
       if (item.children && item.children.length) {
@@ -130,8 +133,9 @@ export  default class TreeDirectory extends Component {
             mode="inline"
             theme="light"
             inlineCollapsed={this.props.collapsed}
+            onSelect={this.onSelectHandle}
             className="menu-list">
-            <SubMenu  key="sub1" title={<span><Icon type="inbox" /><span>我的文件夹</span></span>}>
+            <SubMenu  key="folder" title={<span><Icon type="inbox" /><span>我的文件夹</span></span>}>
               <Menu.Item key="11">
                 <Tree
                   className="draggable-tree"
@@ -145,13 +149,13 @@ export  default class TreeDirectory extends Component {
                 </Tree>
               </Menu.Item>
             </SubMenu>
-            <Menu.Item key="sub2">
+            <Menu.Item key="collection">
               <Icon type="star" /><span>收藏</span>
             </Menu.Item>
-            <Menu.Item key="sub3">
+            <Menu.Item key="pin">
               <Icon type="pushpin" /><span>便签</span>
             </Menu.Item>
-            <Menu.Item key="sub4">
+            <Menu.Item key="delete">
               <Icon type="delete" /><span>回收站</span>
             </Menu.Item>
           </Menu>

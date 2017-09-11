@@ -23,7 +23,7 @@ export default class HeadBar extends Component{
   }
   render(){
     return (
-      <div style={{'-webkit-app-region': 'no-drag'}} className="HeadBar">
+      <div style={{'-webkit-app-region': 'no-drag'}} onDoubleClick={this.max} className="HeadBar">
         <Icon className="icon" onClick={this.setting} type="setting"/>
         <Icon className="icon" onClick={this.min} type="minus"/>
         <Icon className="icon" onClick={this.max} type="laptop"/>

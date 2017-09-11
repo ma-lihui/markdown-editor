@@ -17,7 +17,6 @@
     padding: 0 20px;
     background: #fff;
     border-bottom: 1px solid #eee;
-    position: fixed;
 }
 .EditArea .head .title{
     display: inline-block;
@@ -28,7 +27,6 @@
     outline: 0;
 }
 .EditArea .head .button-wrapper{
-    position: relative;
     display: inline-block;
     width: 100px;
     vertical-align: top;
@@ -41,23 +39,4 @@
     margin: 0 auto;
     font-size: 16px;
 }
-.EditArea .content{
-    width: 100%;
-    display: flex;
-}
-.EditArea .content .editor{
-    margin-top: 64px;
-    overflow: auto;
-    height: calc(100vh - 128px);
-    width: 50%;
-}
-.EditArea .content .textarea{
-    outline: none;
-    width: 100%;
-}
-.EditArea .content .preview{
-    margin-top: 64px;
-    overflow: auto;
-    height: calc(100vh - 128px);
-    width: 50%;
-}
+
