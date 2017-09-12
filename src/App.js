@@ -21,11 +21,11 @@ class App extends Component {
   };
 
   componentDidMount(){
-      Scrollbar.initAll({
-          speed: 3,
-          damping: 0.2,
-          // overscrollEffect: 'bounce'
-      });
+    Scrollbar.initAll({
+      speed: 3,
+      damping: 0.2,
+      // overscrollEffect: 'bounce'
+    });
   }
 
   toggleSider = () => {

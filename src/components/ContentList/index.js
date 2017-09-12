@@ -41,7 +41,7 @@ export default class ContentList extends Component{
             </span>
           </Dropdown>
         </Header>
-        <Content>
+        <Content data-scrollbar>
           <Menu onSelect={this.onSelectHandle} className="menu-list">
             {
               this.props.data.map(function (n,i) {
