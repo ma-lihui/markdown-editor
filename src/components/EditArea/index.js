@@ -1,8 +1,19 @@
 import React, {Component} from 'react';
 import marked from 'marked';
-import SimpleMDE from 'simplemde';
+
 import CodeMirror from 'codemirror';
-import  '../../../node_modules/simplemde/dist/simplemde.min.css'
+import  './codemirror.css'
+
+require("codemirror/addon/edit/continuelist.js");
+require("codemirror/addon/scroll/scrollpastend");
+require("codemirror/addon/display/fullscreen.js");
+require("codemirror/mode/markdown/markdown.js");
+require("codemirror/addon/mode/overlay.js");
+require("codemirror/addon/display/placeholder.js");
+require("codemirror/addon/selection/mark-selection.js");
+require("codemirror/mode/gfm/gfm.js");
+require("codemirror/mode/xml/xml.js");
+
 import {Layout, Button, Input, Icon} from 'antd';
 const {Header, Content, Footer, Sider} = Layout;
 import './index.css'
@@ -11,16 +22,17 @@ export default class EditArea extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      markdownContent: " "
+      markdownContent: ""
     };
   }
   componentWillReceiveProps(nextProps){
     this.setState({
       markdownContent: nextProps.data.content
     });
+      this.editor.setValue(nextProps.data.content);
   }
   componentDidMount(){
-    let editor = CodeMirror.fromTextArea(this.textarea, {
+     this.editor = CodeMirror.fromTextArea(this.textarea, {
       mode: 'markdown',
       theme: "paper",
       tabSize:  2,
@@ -31,7 +43,7 @@ export default class EditArea extends Component {
       // scrollbarStyle: null,
       lineWrapping: true,
     });
-    editor.setValue('# head\n > 1aaa\n > 222');
+    this.editor.setValue('# head\n > 1aaa\n > **222**');
     // document.getElementsByClassName('CodeMirror')[0].setAttribute('data-scrollbar','')
   }
   render() {

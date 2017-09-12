@@ -51,18 +51,18 @@
     height: calc(100vh - 128px);
     width: 50%;
 }
-.EditArea .content .textarea{
-    overflow: auto;
-    outline: none;
-    width: 100%;
-    height: calc(100vh - 135px);
-    resize: none;
-}
+/*.EditArea .content .textarea{*/
+    /*overflow: auto;*/
+    /*outline: none;*/
+    /*width: 100%;*/
+    /*height: calc(100vh - 135px);*/
+    /*resize: none;*/
+/*}*/
 .EditArea .content .editor .CodeMirror{
-    overflow-y: auto;
-    outline: none;
-    width: 100%;
-    height: calc(100vh - 135px);
+    /*overflow-y: auto;*/
+    /*outline: none;*/
+    /*width: 100%;*/
+    /*height: calc(100vh - 135px);*/
 }
 .EditArea .content .editor .CodeMirror .CodeMirror-scroll{
     /*overflow: hidden !important;*/
