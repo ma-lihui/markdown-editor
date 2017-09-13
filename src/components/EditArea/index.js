@@ -59,10 +59,13 @@ export default class EditArea extends Component {
     e.persist();
     let handleMouseMove = (ev) => {
       ev.preventDefault();
-      let x = ev.pageX - this.initX;
-      this.editor.style.width = this.editor.offsetWidth + x + 'px';
-      this.editor.style.width = `calc( 50% + ${x}px )`;
-      this.preview.style.width = `calc( 50% - ${x}px )`;
+      let editorWidthPercent = ( ev.pageX - this.editor.offsetLeft ) / this.content.offsetWidth * 100;
+
+      ( ev.pageX - this.editor.offsetLeft < 7) && (editorWidthPercent = 0);
+      ( ev.pageX - this.editor.offsetLeft - this.content.offsetWidth > -7) && (editorWidthPercent = 100);
+      this.editor.style.flexBasis = `${editorWidthPercent}%`;
+      this.preview.style.flexBasis = `${100 - editorWidthPercent}%`;
+
     };
     document.addEventListener('mousemove', handleMouseMove);
 
@@ -70,7 +73,21 @@ export default class EditArea extends Component {
       document.removeEventListener('mousemove', handleMouseMove);
     });
   }
-
+  onDoubleClickHandle(){
+    this.editor.style.transition = 'flex-basis ease 200ms';
+    this.preview.style.transition = 'flex-basis ease 200ms';
+    setTimeout(() => {
+      this.editor.style.transition = '';
+      this.preview.style.transition = '';
+    },200);
+    if(this.preview.offsetWidth){
+      this.editor.style.flexBasis = '100%';
+      this.preview.style.flexBasis = 0;
+    }else {
+      this.editor.style.flexBasis = '50%';
+      this.preview.style.flexBasis = '50%';
+    }
+  }
   render() {
     marked.setOptions({
       renderer: new marked.Renderer(),
@@ -97,10 +114,10 @@ export default class EditArea extends Component {
             <div className="toolbar"></div>
           </div>
         </Header>
-        <div ref={(ref)=>this.content} className="content">
-          <div ref={(ref)=>this.editor=ref}  className="editor" data-scrollbar><textarea ref={(ref)=>this.textarea=ref} className="textarea" id="mdEditor" width={200} value={this.state.markdownContent}></textarea></div>
-          <div ref={(ref)=>this.dragbar=ref} className="drag-bar" onMouseDown={this.onMouseDownHandle.bind(this)}></div>
-          <div ref={(ref)=>this.preview=ref} data-scrollbar className="preview"><div className="markdown-body" dangerouslySetInnerHTML={{__html: marked(this.state.markdownContent)}}></div></div>
+        <div ref={(ref)=>this.content=ref} className="content">
+          <div ref={(ref)=>this.editor=ref}  className="editor" data-scrollbar><textarea ref={(ref)=>this.textarea=ref} className="textarea" id="mdEditor" width={200} value={this.state.markdownContent} /></div>
+          <div ref={(ref)=>this.dragbar=ref} className="drag-bar" onMouseDown={this.onMouseDownHandle.bind(this)} onDoubleClick={this.onDoubleClickHandle.bind(this)}/>
+          <div ref={(ref)=>this.preview=ref} data-scrollbar className="preview"><div className="markdown-body" dangerouslySetInnerHTML={{__html: marked(this.state.markdownContent)}} /></div>
         </div>
       </div>
     );
