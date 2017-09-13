@@ -22,7 +22,7 @@ class App extends Component {
 
   componentDidMount(){
     Scrollbar.initAll({
-      speed: 3,
+      speed: 2,
       damping: 0.2,
       // overscrollEffect: 'bounce'
     });

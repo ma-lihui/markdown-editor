@@ -12,16 +12,31 @@
     overflow: auto;
     border: none;
 }
+.EditArea .head-wrap{
+    width: 100%;
+    position: relative;
+    padding: 0;
+    margin: 0;
+    height: 64px;
+}
 .EditArea .head{
+    height: 64px;
     width: 100%;
     padding: 0 20px;
     background: #fff;
     border-bottom: 1px solid #eee;
     position: fixed;
 }
-.EditArea .head .title{
+.EditArea .head .title-wrapper{
+    height: 100%;
+    width: 50%;
     display: inline-block;
-    width: calc(100% - 100px);
+}
+.EditArea .head .title{
+    margin: 0;
+    height: 90%;
+    width: 100%;
+    border: none;
 }
 .EditArea .head .title:focus{
     border: none;
@@ -42,36 +57,43 @@
     font-size: 16px;
 }
 .EditArea .content{
+    padding: 10px 0;
     width: 100%;
+    height: calc(100% - 64px);
+    min-height: calc(100% - 64px);
     display: flex;
 }
+.EditArea .content .scroll-content{
+    width: 100%;
+}
+
+.EditArea .content .drag-bar{
+    width: 9px;
+    background: #eee;
+    cursor: col-resize;
+}
+
 .EditArea .content .editor{
-    margin-top: 64px;
     overflow: auto;
-    height: calc(100vh - 128px);
     width: 50%;
+    display: flex;
 }
-/*.EditArea .content .textarea{*/
-    /*overflow: auto;*/
-    /*outline: none;*/
-    /*width: 100%;*/
-    /*height: calc(100vh - 135px);*/
-    /*resize: none;*/
-/*}*/
+
 .EditArea .content .editor .CodeMirror{
-    /*overflow-y: auto;*/
-    /*outline: none;*/
-    /*width: 100%;*/
-    /*height: calc(100vh - 135px);*/
+    overflow-y: auto;
+    outline: none;
+    border: none;
+    width: 100%;
+    min-height: 100%;
+    /*height: 100%;*/
+    /*height: calc(100% - 64px);*/
 }
-.EditArea .content .editor .CodeMirror .CodeMirror-scroll{
-    /*overflow: hidden !important;*/
+.EditArea .content .editor .CodeMirror-scroll{
+    overflow-x: hidden !important;
 }
 
 .EditArea .content .preview{
-    margin-top: 64px;
     padding: 2em;
     overflow: auto;
-    height: calc(100vh - 128px);
     width: 50%;
 }
