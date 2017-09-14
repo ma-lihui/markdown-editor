@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import { Input, Icon, Layout, Menu, Dropdown } from 'antd';
 const {Header, Content, Footer, Sider} = Layout;
 const SubMenu = Menu.SubMenu;
 import './index.css'
 const Search = Input.Search;
 
-export default class ContentList extends Component{
+class ContentList extends Component{
   toggle = () => {
     this.props.toggleSider();
   };
-  onSelectHandle = ({item, key}) => {
-    this.props.changeContentList(this.props.data[key]);
+  onSelectHandle = ({key}) => {
+    this.props.changeContentList(this.props.activeFolder[key]);
   };
   render(){
     const menu = (
@@ -44,7 +45,7 @@ export default class ContentList extends Component{
         <Content data-scrollbar>
           <Menu onSelect={this.onSelectHandle} className="menu-list">
             {
-              this.props.data.map(function (n,i) {
+              this.props.activeFolder.map(function (n,i) {
                 return (
                   <Menu.Item  key={i} className="content-wrapper">
                     <h3 className="title">{n.title}</h3>
@@ -57,9 +58,18 @@ export default class ContentList extends Component{
           </Menu>
         </Content>
         <Footer className="footer">
-          <p>共{this.props.data.length}项</p>
+          <p>共{this.props.activeFolder.length}项</p>
         </Footer>
       </Layout>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  let { status } = state;
+  return { activeFolder: status.activeFolder };
+};
+const mapDispatchToProps = {
+
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ContentList);

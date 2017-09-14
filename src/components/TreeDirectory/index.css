@@ -65,3 +65,12 @@
     font-family: "anticon" !important;
 }
 
+.TreeDirectory .sub-folder .ant-menu-submenu-title{
+    margin-top: -42px;
+    width: 0;
+    z-index: 3;
+    margin-left: 160px;
+}
+.TreeDirectory .sub-folder.ant-menu-submenu-vertical{
+    display: none;
+}

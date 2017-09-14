@@ -1,0 +1,21 @@
+
+export function newMarkdown(data){
+  return {
+    type: 'NEW_MARKDOWN',
+    data: data,
+  };
+}
+
+export function newFolder(data){
+  return {
+    type: 'NEW_FOLDER',
+    data: data,
+  };
+}
+
+export function setActiveFolder(folder){
+  return {
+    type: 'SET_ACTIVE_FOLDER',
+    folder,
+  };
+}
