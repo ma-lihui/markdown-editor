@@ -10,7 +10,7 @@ import '../../css/github-markdown.css'
 
 
 import {Layout, Button, Input, Icon} from 'antd';
-const {Header, Content, Footer, Sider} = Layout;
+const {Header} = Layout;
 import './index.css'
 export default class EditArea extends Component {
   constructor(props) {

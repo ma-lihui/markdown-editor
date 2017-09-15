@@ -6,11 +6,10 @@ import HeadBar from './components/HeadBar'
 import TreeDirectory from './components/TreeDirectory'
 import ContentList from './components/ContentList'
 import EditArea from './components/EditArea'
-import {Layout, Menu, Icon} from 'antd';
+import { Layout } from 'antd';
 import 'smooth-scrollbar/dist/smooth-scrollbar.css'
 
-const {SubMenu} = Menu;
-const {Header, Content, Footer, Sider} = Layout;
+const {Header, Content, Sider} = Layout;
 
 
 class App extends Component {

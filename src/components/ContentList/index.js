@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { Input, Icon, Layout, Menu, Dropdown } from 'antd';
-const {Header, Content, Footer, Sider} = Layout;
-const SubMenu = Menu.SubMenu;
+const {Header, Content, Footer } = Layout;
 import './index.css'
 const Search = Input.Search;
 
@@ -66,8 +65,8 @@ class ContentList extends Component{
 }
 
 const mapStateToProps = (state) => {
-  let { status } = state;
-  return { activeFolder: status.activeFolder };
+  let { activeFolder } = state;
+  return { activeFolder };
 };
 const mapDispatchToProps = {
 

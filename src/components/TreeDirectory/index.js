@@ -1,22 +1,32 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {newMarkdown,newFolder,setActiveFolder} from '../../actions';
-import {Layout, Tree, Icon, Menu, Dropdown, Button} from 'antd';
-const {Header, Content, Footer, Sider} = Layout;
-import {getData} from '../../common'
-import './index.css'
-
-const TreeNode = Tree.TreeNode;
+import {Layout, Icon, Menu, Dropdown } from 'antd';
+const {Header, Content} = Layout;
 const SubMenu = Menu.SubMenu;
+
+import './index.css'
 
 
 class TreeDirectory extends Component {
   state = {
-    myFolderOpen: true,
     collapsed: false,
   };
-
-
+  generateMenu(menus){
+    return menus.map(menu => {
+      return ([
+          <Menu.Item key={menu.name}>
+            <Icon type={menu.icon}/><span>{menu.name}</span>
+          </Menu.Item>,
+          menu.children ?
+            <SubMenu key={`subFolder${menu.name}`} className="sub-menu">
+              {this.generateMenu(menu.children)}
+            </SubMenu>
+            : null
+        ]
+      )
+    });
+  }
   toggleCollapsed = () => {
     this.setState({
       collapsed: !this.state.collapsed,
@@ -27,6 +37,8 @@ class TreeDirectory extends Component {
   };
   render() {
     let {data} = this.props;
+    console.log(this.generateMenu(data));
+
     const menu = (
       <Menu>
         <Menu.Item key="0">新建笔记</Menu.Item>
@@ -53,37 +65,9 @@ class TreeDirectory extends Component {
             inlineCollapsed={this.props.collapsed}
             onSelect={this.onSelectHandle}
             className="menu-list">
-            <Menu.Item key="myFolder">
-              <Icon type="inbox"/><span>我的文件夹</span>
-            </Menu.Item>
-            <SubMenu key="subFolder" className={'sub-folder'}>
-              {
-                this.state.myFolderOpen?
-                data.map((n)=>{
-                  if(n.type==='folder') {
-                    return (
-                      <Menu.Item key={n.name}>
-                        <Icon type="folder"/><span>{n.name}</span>
-                      </Menu.Item>
-                    );
-                  }
-                }):null
-              }
-            </SubMenu>
-
-            <Menu.Item key="collection">
-              <Icon type="star"/><span>收藏</span>
-            </Menu.Item>
-            <Menu.Item key="pin">
-              <Icon type="pushpin"/><span>便签</span>
-            </Menu.Item>
-            <Menu.Item key="delete">
-              <Icon type="delete"/><span>回收站</span>
-            </Menu.Item>
+            {this.generateMenu(data)}
           </Menu>
-
         </Content>
-
       </Layout>
     );
   }
