@@ -1,4 +1,3 @@
-
 let initState = {
   data: [
     {
@@ -7,7 +6,7 @@ let initState = {
       key: 'myFolder',
       icon: 'inbox',
       date: '9/9/2017',
-      children:[
+      children: [
         {
           type: 'folder',
           name: 'new folder',
@@ -83,24 +82,25 @@ let initState = {
   ],
   activeFolder: [],
   activeFile: {},
-  status:{
-
+  status: {
+    sideCollapsed: false
   },
   setting: {},
 };
 function getActiveFolder(state, action) {
   let pathArr = action.path.split('/');
   let activeFolderData = state.data;
-  while(pathArr.length){
+  while (pathArr.length) {
     pathArr.shift();
-    activeFolderData.forEach(n=>{
-      if(n.name===pathArr[0] && n.type==='folder'){
-        activeFolderData = n.children;
+    activeFolderData.forEach(n => {
+      if (n.name === pathArr[0] && n.type === 'folder') {
+        activeFolderData = n.children || [];
       }
     })
   }
   return activeFolderData;
 }
+
 export default function indexReducer(state = initState, action) {
   let newState = {...state};
   switch (action.type) {
@@ -108,7 +108,13 @@ export default function indexReducer(state = initState, action) {
       newState = state;
       break;
     case 'SET_ACTIVE_FOLDER':
-      newState.status.activeFolder = getActiveFolder(state,action);
+      newState = {...state, activeFolder: getActiveFolder(state, action)};
+      break;
+    case 'SET_ACTIVE_FILE':
+      newState = {...state, activeFile: state.activeFolder.filter(f => f.name === action.file)[0]};
+      break;
+    case 'TOGGLE_SIDE':
+      newState.status = {...state.status, sideCollapsed: action.sideCollapsed};
       break;
   }
 

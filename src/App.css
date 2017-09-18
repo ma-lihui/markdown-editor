@@ -28,3 +28,10 @@ body{
     border-radius: 8px;
     background: #888;
 }
+
+.ant-layout-sider-trigger {
+    height: 40px;
+    background: #fff;
+    color: #108ee9;
+    left: -1px;
+}

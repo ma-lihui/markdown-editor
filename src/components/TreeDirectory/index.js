@@ -9,34 +9,25 @@ import './index.css'
 
 
 class TreeDirectory extends Component {
-  state = {
-    collapsed: false,
-  };
   generateMenu(menus,path=''){
     return menus.map(menu => {
       let key = `${path}/${menu.name}`;
       return ([
-          menu.type === 'folder'?
+          menu.type === 'folder' ?
             <Menu.Item key={key}>
               <Icon type={menu.icon}/><span>{menu.name}</span>
             </Menu.Item>
-            :null,
-          menu.children && menu.children.some(c=>c.type==='folder') ?
-            <SubMenu className="sub-menu">
-              {this.generateMenu(menu.children,key)}
+            : null,
+          menu.children && menu.children.some(c => c.type === 'folder') ?
+            <SubMenu key={`${key}/`} className="sub-menu">
+              {this.generateMenu(menu.children, key)}
             </SubMenu>
             : null
         ]
       )
     });
   }
-  toggleCollapsed = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
-  };
   onSelectHandle = ({key}) => {
-    console.log(key);
     this.props.setActiveFolder(key);
   };
   render() {
@@ -54,17 +45,17 @@ class TreeDirectory extends Component {
           <Dropdown overlay={menu} trigger={['click']}>
             <a className="ant-dropdown-link" href="#">
               <Icon className="icon plus" type="plus"/>
-              {!this.props.collapsed ? <span>新建<Icon className="icon caret-down" type="caret-down"/></span> : ''}
+              {!this.props.sideCollapsed ? <span>新建<Icon className="icon caret-down" type="caret-down"/></span> : ''}
             </a>
           </Dropdown>
         </Header>
         <Content>
           <Menu
-            defaultSelectedKeys={['myFolder']}
-            defaultOpenKeys={['subFolder']}
+            defaultSelectedKeys={['/我的文件夹']}
+            defaultOpenKeys={['/我的文件夹/']}
             mode="inline"
             theme="light"
-            inlineCollapsed={this.props.collapsed}
+            inlineCollapsed={this.props.sideCollapsed}
             onSelect={this.onSelectHandle}
             className="menu-list">
             {this.generateMenu(data)}
@@ -76,8 +67,9 @@ class TreeDirectory extends Component {
 }
 
 const mapStateToProps = (state) => {
-  let { data } = state;
-  return { data };
+  let {data, status} = state;
+  let {sideCollapsed} = status;
+  return {data, sideCollapsed};
 };
 const mapDispatchToProps = {
   newMarkdown,

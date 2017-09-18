@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {toggleSide} from './actions'
 import Scrollbar from 'smooth-scrollbar';
 import logo from './logo.svg';
 import './App.css';
@@ -13,12 +15,6 @@ const {Header, Content, Sider} = Layout;
 
 
 class App extends Component {
-  state = {
-    collapsed: false,
-    data: [],
-    subData: {},
-  };
-
   componentDidMount(){
     Scrollbar.initAll({
       speed: 2,
@@ -27,20 +23,8 @@ class App extends Component {
     });
   }
 
-  toggleSider = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
-  };
-  changeDirectory = (data) => {
-    this.setState({
-      data: data
-    })
-  };
-  changeContentList = (subData) => {
-    this.setState({
-      subData: subData
-    })
+  onCollapseHandle = (collapsed, type) => {
+    this.props.toggleSide(collapsed);
   };
   render() {
     return (
@@ -53,17 +37,28 @@ class App extends Component {
           <HeadBar/>
         </Header>
         <Layout style={{background: '#fff'}}>
-          <Sider style={{background: '#fff'}} trigger={null} collapsible collapsed={this.state.collapsed} collapsedWidth="64">
-            <TreeDirectory collapsed={this.state.collapsed} changeDirectory={this.changeDirectory} />
+          <Sider style={{background: '#fff'}} defaultCollapsed={this.props.sideCollapsed}
+                 onCollapse={this.onCollapseHandle} collapsible collapsedWidth="64">
+            <TreeDirectory />
           </Sider>
           <Sider width={300}>
-            <ContentList toggleSider={this.toggleSider} collapsed={this.state.collapsed} data={this.state.data} changeContentList={this.changeContentList} />
+            <ContentList />
           </Sider>
-          <Content><EditArea data={this.state.subData} /></Content>
+          <Content>
+            <EditArea />
+          </Content>
         </Layout>
       </Layout>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  let {status} = state;
+  let {sideCollapsed} = status;
+  return {sideCollapsed};
+};
+const mapDispatchToProps = {
+  toggleSide,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(App);

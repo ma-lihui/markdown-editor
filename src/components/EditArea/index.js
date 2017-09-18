@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import marked from 'marked';
 // import Highlight from 'highlight'
 
@@ -12,7 +13,7 @@ import '../../css/github-markdown.css'
 import {Layout, Button, Input, Icon} from 'antd';
 const {Header} = Layout;
 import './index.css'
-export default class EditArea extends Component {
+class EditArea extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,10 +23,10 @@ export default class EditArea extends Component {
   }
   componentWillReceiveProps(nextProps){
     this.setState({
-      title: nextProps.data.title,
-      markdownContent: nextProps.data.content
+      title: nextProps.activeFile.name,
+      markdownContent: nextProps.activeFile.content || ''
     });
-      this.CodeMirror.setValue(nextProps.data.content);
+    this.CodeMirror.setValue(nextProps.activeFile.content || '');
   }
   componentDidMount(){
      this.CodeMirror = CodeMirror.fromTextArea(this.textarea, {
@@ -40,7 +41,7 @@ export default class EditArea extends Component {
       lineWrapping: true,
       // autoRefresh:true,
     });
-    this.CodeMirror.setValue('# head\n > 1aaa\n > **222**');
+    this.CodeMirror.setValue('');
     this.CodeMirror.on('change',(instance,changeObj)=>{
       this.setState({
         markdownContent: this.CodeMirror.getValue()
@@ -123,3 +124,10 @@ export default class EditArea extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  let {activeFile} = state;
+  return {activeFile};
+};
+const mapDispatchToProps = {};
+export default connect(mapStateToProps, mapDispatchToProps)(EditArea);

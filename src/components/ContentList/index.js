@@ -1,16 +1,24 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {setActiveFolder, setActiveFile} from '../../actions';
+
 import { Input, Icon, Layout, Menu, Dropdown } from 'antd';
 const {Header, Content, Footer } = Layout;
 import './index.css'
 const Search = Input.Search;
 
 class ContentList extends Component{
+  constructor(props) {
+    super(props);
+    if (this.props.activeFolder.length) {
+
+    }
+  }
   toggle = () => {
     this.props.toggleSider();
   };
   onSelectHandle = ({key}) => {
-    this.props.changeContentList(this.props.activeFolder[key]);
+    this.props.setActiveFile(key);
   };
   render(){
     const menu = (
@@ -46,8 +54,8 @@ class ContentList extends Component{
             {
               this.props.activeFolder.map(function (n,i) {
                 return (
-                  <Menu.Item  key={i} className="content-wrapper">
-                    <h3 className="title">{n.title}</h3>
+                  <Menu.Item key={n.name} className="content-wrapper">
+                    <h3 className="title">{n.name}</h3>
                     <div className="detail">{n.content}</div>
                     <p>{n.date} </p>
                   </Menu.Item>
@@ -69,6 +77,6 @@ const mapStateToProps = (state) => {
   return { activeFolder };
 };
 const mapDispatchToProps = {
-
+  setActiveFile
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ContentList);
