@@ -13,9 +13,9 @@ export function newFolder(data){
   };
 }
 
-export function setActiveFolder(folder){
+export function setActiveFolder(path){
   return {
     type: 'SET_ACTIVE_FOLDER',
-    folder,
+    path,
   };
 }

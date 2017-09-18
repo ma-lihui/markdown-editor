@@ -12,15 +12,18 @@ class TreeDirectory extends Component {
   state = {
     collapsed: false,
   };
-  generateMenu(menus){
+  generateMenu(menus,path=''){
     return menus.map(menu => {
+      let key = `${path}/${menu.name}`;
       return ([
-          <Menu.Item key={menu.name}>
-            <Icon type={menu.icon}/><span>{menu.name}</span>
-          </Menu.Item>,
-          menu.children ?
-            <SubMenu key={`subFolder${menu.name}`} className="sub-menu">
-              {this.generateMenu(menu.children)}
+          menu.type === 'folder'?
+            <Menu.Item key={key}>
+              <Icon type={menu.icon}/><span>{menu.name}</span>
+            </Menu.Item>
+            :null,
+          menu.children && menu.children.some(c=>c.type==='folder') ?
+            <SubMenu className="sub-menu">
+              {this.generateMenu(menu.children,key)}
             </SubMenu>
             : null
         ]
@@ -33,12 +36,11 @@ class TreeDirectory extends Component {
     });
   };
   onSelectHandle = ({key}) => {
+    console.log(key);
     this.props.setActiveFolder(key);
   };
   render() {
     let {data} = this.props;
-    console.log(this.generateMenu(data));
-
     const menu = (
       <Menu>
         <Menu.Item key="0">新建笔记</Menu.Item>

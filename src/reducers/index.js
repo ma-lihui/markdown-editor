@@ -15,12 +15,11 @@ let initState = {
           date: '9/9/2017',
           children: [
             {
-              type: 'markdown',
+              type: 'folder',
               name: 'hello',
-              icon: 'file',
+              icon: 'folder',
               title: 'hello',
               date: '9/9/2017',
-              content: `Hello **world!**`
             }
           ]
         },
@@ -90,7 +89,17 @@ let initState = {
   setting: {},
 };
 function getActiveFolder(state, action) {
-
+  let pathArr = action.path.split('/');
+  let activeFolderData = state.data;
+  while(pathArr.length){
+    pathArr.shift();
+    activeFolderData.forEach(n=>{
+      if(n.name===pathArr[0] && n.type==='folder'){
+        activeFolderData = n.children;
+      }
+    })
+  }
+  return activeFolderData;
 }
 export default function indexReducer(state = initState, action) {
   let newState = {...state};
