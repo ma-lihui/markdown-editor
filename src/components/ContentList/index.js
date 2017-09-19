@@ -8,19 +8,11 @@ import './index.css'
 const Search = Input.Search;
 
 class ContentList extends Component{
-  constructor(props) {
-    super(props);
-    if (this.props.activeFolder.length) {
-
-    }
-  }
-  toggle = () => {
-    this.props.toggleSider();
-  };
   onSelectHandle = ({key}) => {
     this.props.setActiveFile(key);
   };
   render(){
+    let {activeFolderPath,activeFilePath} = this.props;
     const menu = (
       <Menu>
         <Menu.Item key="0">创建时间</Menu.Item>
@@ -32,11 +24,7 @@ class ContentList extends Component{
     return (
       <Layout style={{background: '#fff'}} className="ContentList">
         <Header className="head">
-          <Icon
-            className="trigger"
-            type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'}
-            onClick={this.toggle}
-          />
+          <Icon className="left-icon" type="rollback" />
           <Search
             className="Search"
             placeholder="input search text"
@@ -50,12 +38,12 @@ class ContentList extends Component{
           </Dropdown>
         </Header>
         <Content data-scrollbar>
-          <Menu onSelect={this.onSelectHandle} className="menu-list">
+          <Menu onSelect={this.onSelectHandle} selectedKeys={[activeFilePath]} className="menu-list">
             {
-              this.props.activeFolder.map(function (n,i) {
+              this.props.activeFolder.map(function (n) {
                 return (
                   <Menu.Item key={n.name} className="content-wrapper">
-                    <h3 className="title">{n.name}</h3>
+                    <h3 className="title"><Icon type={n.type==='folder'?'folder':'file'} />{n.name}</h3>
                     <div className="detail">{n.content}</div>
                     <p>{n.date} </p>
                   </Menu.Item>
@@ -73,8 +61,9 @@ class ContentList extends Component{
 }
 
 const mapStateToProps = (state) => {
-  let { activeFolder } = state;
-  return { activeFolder };
+  let { activeFolder, status } = state;
+  let {activeFolderPath,activeFilePath} = status;
+  return { activeFolder, activeFolderPath, activeFilePath };
 };
 const mapDispatchToProps = {
   setActiveFile

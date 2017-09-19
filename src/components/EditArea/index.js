@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {saveFile} from '../../actions'
 import marked from 'marked';
 // import Highlight from 'highlight'
 
@@ -17,13 +18,13 @@ class EditArea extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title:'',
-      markdownContent: ''
+      title: this.props.activeFile.name || '',
+      markdownContent: this.props.activeFile.content || ''
     };
   }
   componentWillReceiveProps(nextProps){
     this.setState({
-      title: nextProps.activeFile.name,
+      title: nextProps.activeFile.name || '',
       markdownContent: nextProps.activeFile.content || ''
     });
     this.CodeMirror.setValue(nextProps.activeFile.content || '');
@@ -41,14 +42,23 @@ class EditArea extends Component {
       lineWrapping: true,
       // autoRefresh:true,
     });
-    this.CodeMirror.setValue('');
+    this.CodeMirror.setValue(this.props.activeFile.content || '');
     this.CodeMirror.on('change',(instance,changeObj)=>{
       this.setState({
         markdownContent: this.CodeMirror.getValue()
-      })
+      });
     });
     // document.getElementsByClassName('CodeMirror-scroll')[0].setAttribute('data-scrollbar', '');
+
   }
+
+  saveClickHandle = () => {
+    let {title,markdownContent} = this.state;
+    this.props.saveFile({
+      name: title,
+      content: markdownContent
+    })
+  };
   titleChangeHandle(e){
     this.setState({
       title: e.target.value
@@ -110,7 +120,7 @@ class EditArea extends Component {
           <div className="head">
             <h1 className="title-wrapper"><input className="title" type="text" value={this.state.title} onChange={this.titleChangeHandle.bind(this)}/></h1>
             <div className="button-wrapper">
-              <Button type="primary" ghost>保存</Button>
+              <Button type="primary" onClick={this.saveClickHandle} ghost>保存</Button>
             </div>
             <div className="toolbar"></div>
           </div>
@@ -129,5 +139,7 @@ const mapStateToProps = (state) => {
   let {activeFile} = state;
   return {activeFile};
 };
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  saveFile
+};
 export default connect(mapStateToProps, mapDispatchToProps)(EditArea);

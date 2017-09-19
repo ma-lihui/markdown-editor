@@ -32,3 +32,10 @@ export function toggleSide(sideCollapsed) {
     sideCollapsed,
   };
 }
+
+export function saveFile(data) {
+  return {
+    type: 'SAVE_FILE',
+    data: data,
+  };
+}

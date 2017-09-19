@@ -9,6 +9,11 @@ import './index.css'
 
 
 class TreeDirectory extends Component {
+  constructor(props){
+    super(props);
+    let {setActiveFolder, activeFolderPath} = this.props;
+    setActiveFolder(activeFolderPath);
+  }
   generateMenu(menus,path=''){
     return menus.map(menu => {
       let key = `${path}/${menu.name}`;
@@ -31,7 +36,7 @@ class TreeDirectory extends Component {
     this.props.setActiveFolder(key);
   };
   render() {
-    let {data} = this.props;
+    let {data,activeFolderPath} = this.props;
     const menu = (
       <Menu>
         <Menu.Item key="0">新建笔记</Menu.Item>
@@ -51,7 +56,7 @@ class TreeDirectory extends Component {
         </Header>
         <Content>
           <Menu
-            defaultSelectedKeys={['/我的文件夹']}
+            defaultSelectedKeys={[activeFolderPath]}
             defaultOpenKeys={['/我的文件夹/']}
             mode="inline"
             theme="light"
@@ -68,8 +73,8 @@ class TreeDirectory extends Component {
 
 const mapStateToProps = (state) => {
   let {data, status} = state;
-  let {sideCollapsed} = status;
-  return {data, sideCollapsed};
+  let {sideCollapsed,activeFolderPath} = status;
+  return {data, sideCollapsed,activeFolderPath};
 };
 const mapDispatchToProps = {
   newMarkdown,
