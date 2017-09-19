@@ -116,22 +116,47 @@ function getActiveFolder(state, action) {
   activeFileData = activeFileData || {};
   return {activeFolderData, activeFileData, activeFolderPath: action.path, activeFilePath: activeFileData.name};
 }
-
+function getActiveFile(state, action) {
+  return {
+    ...state,
+    status: {...state.status, activeFilePath: action.file},
+    activeFile: state.activeFolder.filter(f => f.name === action.file)[0]
+  };
+}
 function saveFile(state, action) {
   let newState = JSON.parse(JSON.stringify(state));
   let {activeFolderData} = getActiveFolder(newState, {path: state.status.activeFolderPath});
-  activeFolderData[0].name = new Date()/1;
-  activeFolderData.forEach(f => {
+  activeFolderData.forEach((f, i) => {
     if(f.name === state.status.activeFilePath) {
       f.name = action.data.name;
       f.content = action.data.content;
+      newState.activeFile = f;
+      newState.activeFolder[i] = f;
+      newState.status.activeFilePath = f.name;
     }
   });
   return newState;
 }
 
-function newFolder(state, action) {
+function newFile(state, action) {
+  console.log(action);
+  let newState = JSON.parse(JSON.stringify(state));
+  let {activeFolderData} = getActiveFolder(newState, {path: state.status.activeFolderPath});
+  let file = {
+    type: 'markdown',
+    icon: 'file',
+    name: '新建markdown' + new Date() / 1,
+    date: new Date().toLocaleDateString(),
+    content: ''
+  };
+  activeFolderData.push(file);
+  newState.activeFile = file;
+  newState.activeFolder.push(file);
+  newState.status.activeFilePath = file.name;
+  return newState;
+}
 
+function newFolder(state, action) {
 }
 
 export default function indexReducer(state = initState, action) {
@@ -153,14 +178,16 @@ export default function indexReducer(state = initState, action) {
       };
       break;
     case 'SET_ACTIVE_FILE':
-      newState = {...state, activeFile: state.activeFolder.filter(f => f.name === action.file)[0]};
-      newState.status = {...state.status, activeFilePath: action.file};
+      newState = getActiveFile(state, action);
       break;
     case 'TOGGLE_SIDE':
       newState.status = {...state.status, sideCollapsed: action.sideCollapsed};
       break;
     case 'NEW_FOLDER':
       newState = newFolder(state, action);
+      break;
+    case 'NEW_FILE':
+      newState = newFile(state, action);
       break;
     case 'SAVE_FILE':
       newState = saveFile(state, action);

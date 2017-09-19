@@ -6,6 +6,10 @@
     width: 100%;
     float: left;
 }
+
+.EditArea ol {
+    list-style: decimal;
+}
 .EditArea .RichEditor-root {
     width: 100%;
     height: calc(100vh - 128px);

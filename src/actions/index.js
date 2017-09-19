@@ -1,6 +1,6 @@
-export function newMarkdown(data) {
+export function newFile(data) {
   return {
-    type: 'NEW_MARKDOWN',
+    type: 'NEW_FILE',
     data: data,
   };
 }

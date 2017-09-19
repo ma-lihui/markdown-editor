@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {newMarkdown,newFolder,setActiveFolder} from '../../actions';
+import {newFile, newFolder, setActiveFolder} from '../../actions';
 import {Layout, Icon, Menu, Dropdown } from 'antd';
 const {Header, Content} = Layout;
 const SubMenu = Menu.SubMenu;
@@ -35,10 +35,13 @@ class TreeDirectory extends Component {
   onSelectHandle = ({key}) => {
     this.props.setActiveFolder(key);
   };
+  onMenuSelectHandle = ({key}) => {
+    this.props.newFile(key);
+  };
   render() {
     let {data,activeFolderPath} = this.props;
     const menu = (
-      <Menu>
+      <Menu onClick={this.onMenuSelectHandle}>
         <Menu.Item key="0">新建笔记</Menu.Item>
         <Menu.Item key="1">新建MarkDown</Menu.Item>
         <Menu.Item key="2">新建文件夹</Menu.Item>
@@ -77,7 +80,7 @@ const mapStateToProps = (state) => {
   return {data, sideCollapsed,activeFolderPath};
 };
 const mapDispatchToProps = {
-  newMarkdown,
+  newFile,
   newFolder,
   setActiveFolder
 };
