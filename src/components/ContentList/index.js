@@ -45,7 +45,7 @@ class ContentList extends Component{
                   <Menu.Item key={n.name} className="content-wrapper">
                     <h3 className="title"><Icon type={n.type==='folder'?'folder':'file'} />{n.name}</h3>
                     <div className="detail">{n.content}</div>
-                    <p>{n.date} </p>
+                    <p>{n.date}</p>
                   </Menu.Item>
                 )
               })

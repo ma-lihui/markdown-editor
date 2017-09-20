@@ -8,7 +8,10 @@
 }
 
 .EditArea ol {
-    list-style: decimal;
+    list-style: decimal!important;
+}
+.EditArea ul {
+    list-style: initial!important;
 }
 .EditArea .RichEditor-root {
     width: 100%;

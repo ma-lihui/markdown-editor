@@ -1,83 +1,52 @@
 import {setItem,getItem} from '../common';
+import {MARKDOWN_GUIDE} from '../constants'
 let initState = {
   data: [
     {
-      type: 'folder',
       name: '我的文件夹',
+      type: 'folder',
       key: 'myFolder',
       icon: 'inbox',
-      date: '9/9/2017',
+      date: new Date().toLocaleDateString(),
       children: [
         {
+          name: '文件夹',
           type: 'folder',
-          name: 'new folder',
           icon: 'folder',
-          date: '9/9/2017',
-          children: [
-            {
-              type: 'folder',
-              name: 'hello',
-              icon: 'folder',
-              title: 'hello',
-              date: '9/9/2017',
-            }
-          ]
+          date: new Date().toLocaleDateString(),
+          children: []
         },
         {
-          type: 'folder',
-          name: 'new folder2',
-          icon: 'folder',
-          date: '9/9/2017',
-          children: [
-            {
-              type: 'markdown',
-              name: 'hello2',
-              icon: 'file',
-              title: 'hello',
-              date: '9/9/2017',
-              content: `Hello **world!**`
-            }
-          ]
-        },
-        {
+          name: 'Markdown简介',
           type: 'markdown',
           icon: 'file',
-          name: 'MarkDown的基本使用',
-          title: 'MarkDown的基本使用',
-          date: '9/9/2017',
-          content: `Welcome to **StackEdit!**`
-        }
+          date: new Date().toLocaleDateString(),
+          content: MARKDOWN_GUIDE
+        },
       ]
     },
     {
-      type: 'folder',
       name: '收藏',
+      type: 'folder',
+      key: 'collection',
       icon: 'star',
-      date: '9/9/2017',
+      date: new Date().toLocaleDateString(),
       children: []
     },
     {
-      type: 'folder',
       name: '便签',
+      type: 'folder',
       key: 'pin',
       icon: 'pushpin',
-      date: '9/9/2017',
-      children: [
-        {
-          type: 'markdown',
-          icon: 'file',
-          name: 'test',
-          title: 'pin',
-          date: '9/9/2017',
-          content: `Welcome `
-        }
-      ]
+      date: new Date().toLocaleDateString(),
+      children: []
     },
     {
-      type: 'folder',
       name: '回收站',
+      type: 'folder',
+      key: 'delete',
       icon: 'delete',
-      date: '9/9/2017',
+      date: new Date().toLocaleDateString(),
       children: []
     },
   ],
@@ -139,16 +108,27 @@ function saveFile(state, action) {
 }
 
 function newFile(state, action) {
-  console.log(action);
   let newState = JSON.parse(JSON.stringify(state));
   let {activeFolderData} = getActiveFolder(newState, {path: state.status.activeFolderPath});
+  let nameIndex = 1;
   let file = {
-    type: 'markdown',
+    name: getFileName(action.file.name,action.file.name,nameIndex,newState.activeFolder),
+    type: action.file.type,
     icon: 'file',
-    name: '新建markdown' + new Date() / 1,
     date: new Date().toLocaleDateString(),
-    content: ''
+    content: '',
   };
+  function getFileName(defaultName,name,nameIndex=1,folder){
+    if(folder.some(f=>f.name===name)){
+      nameIndex++;
+      name =`${defaultName}(${nameIndex})`;
+      return getFileName(defaultName,name,nameIndex,folder)
+    }
+    return name
+  }
+  if(action.file.type === 'folder'){
+    file = {...file,icon:'folder',children:[]};
+  }
   activeFolderData.push(file);
   newState.activeFile = file;
   newState.activeFolder.push(file);

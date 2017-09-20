@@ -1,14 +1,14 @@
-export function newFile(data) {
+export function newFile(file) {
   return {
     type: 'NEW_FILE',
-    data: data,
+    file
   };
 }
 
-export function newFolder(data) {
+export function newFolder(folder) {
   return {
     type: 'NEW_FOLDER',
-    data: data,
+    folder
   };
 }
 

@@ -1,12 +1,23 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {newFile, newFolder, setActiveFolder} from '../../actions';
 import {Layout, Icon, Menu, Dropdown } from 'antd';
 const {Header, Content} = Layout;
 const SubMenu = Menu.SubMenu;
-
+import {newFile, newFolder, setActiveFolder} from '../../actions';
+import {CREATE_MENU} from '../../constants';
 import './index.css'
 
+// const {remote} = window.require('electron');
+// const {Menu: ContextMenu, MenuItem} = remote;
+// const menu = new ContextMenu();
+// menu.append(new MenuItem({label: 'MenuItem1', click() { console.log('item 1 clicked') }}));
+// menu.append(new MenuItem({type: 'separator'}));
+// menu.append(new MenuItem({label: 'MenuItem2', type: 'checkbox', checked: true}));
+//
+// window.addEventListener('contextmenu', (e) => {
+//   e.preventDefault();
+//   menu.popup(remote.getCurrentWindow())
+// }, false);
 
 class TreeDirectory extends Component {
   constructor(props){
@@ -36,15 +47,17 @@ class TreeDirectory extends Component {
     this.props.setActiveFolder(key);
   };
   onMenuSelectHandle = ({key}) => {
-    this.props.newFile(key);
+    this.props.newFile(CREATE_MENU[key]);
   };
   render() {
     let {data,activeFolderPath} = this.props;
     const menu = (
       <Menu onClick={this.onMenuSelectHandle}>
-        <Menu.Item key="0">新建笔记</Menu.Item>
-        <Menu.Item key="1">新建MarkDown</Menu.Item>
-        <Menu.Item key="2">新建文件夹</Menu.Item>
+        {
+          CREATE_MENU.map((menu,i)=>{
+            return <Menu.Item key={i}>{menu.name}</Menu.Item>
+          })
+        }
       </Menu>
     );
     return (
