@@ -7,18 +7,6 @@ import {newFile, newFolder, setActiveFolder} from '../../actions';
 import {CREATE_MENU} from '../../constants';
 import './index.css'
 
-// const {remote} = window.require('electron');
-// const {Menu: ContextMenu, MenuItem} = remote;
-// const menu = new ContextMenu();
-// menu.append(new MenuItem({label: 'MenuItem1', click() { console.log('item 1 clicked') }}));
-// menu.append(new MenuItem({type: 'separator'}));
-// menu.append(new MenuItem({label: 'MenuItem2', type: 'checkbox', checked: true}));
-//
-// window.addEventListener('contextmenu', (e) => {
-//   e.preventDefault();
-//   menu.popup(remote.getCurrentWindow())
-// }, false);
-
 class TreeDirectory extends Component {
   constructor(props){
     super(props);

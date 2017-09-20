@@ -38,7 +38,7 @@ class App extends Component {
         </Header>
         <Layout style={{background: '#fff'}}>
           <Sider style={{background: '#fff'}} defaultCollapsed={this.props.sideCollapsed}
-                 onCollapse={this.onCollapseHandle} collapsible collapsedWidth="64">
+                 onCollapse={this.onCollapseHandle} collapsible>
             <TreeDirectory />
           </Sider>
           <Sider width={300}>
