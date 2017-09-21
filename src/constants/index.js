@@ -7,3 +7,9 @@ export const CREATE_MENU = [
   {type:'folder',name:'新建文件夹'},
 ];
 
+export const PLATFORM = (function () {
+  if(!window.process) {
+    return 'browser';
+  }
+  return window.process.platform;
+})();

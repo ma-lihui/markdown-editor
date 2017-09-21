@@ -35,3 +35,15 @@ body{
     color: #108ee9;
     left: -1px;
 }
+
+.header {
+    width: 100%;
+    background: #108ee9;
+    /*background: linear-gradient(#108ee9, #34a0e9);*/
+    background: linear-gradient(45deg, rgba(5,118,255,1) 0%, rgba(16,142,233,1) 100%);
+    background: -moz-linear-gradient(45deg, rgba(5,118,255,1) 0%, rgba(36,248,255,1) 100%);
+    background: -webkit-linear-gradient(45deg, rgba(5,118,255,1) 0%, rgba(36,248,255,1) 100%);
+    background: -o-linear-gradient(45deg, rgba(5,118,255,1) 0%, rgba(36,248,255,1) 100%);
+    background: -ms-linear-gradient(45deg, rgba(5,118,255,1) 0%, rgba(36,248,255,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0576ff', endColorstr='#24f8ff', GradientType=1 );
+}

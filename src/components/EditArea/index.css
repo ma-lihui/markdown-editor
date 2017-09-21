@@ -1,6 +1,5 @@
 
 .EditArea{
-    overflow: auto;
     height: calc(100vh - 64px);
     background: #fff;
     width: 100%;
@@ -32,11 +31,11 @@
     padding: 0 20px;
     background: #fff;
     border-bottom: 1px solid #eee;
-    position: fixed;
+    position: absolute;
 }
 .EditArea .head .title-wrapper{
     height: 100%;
-    width: 50%;
+    width: calc(100% - 100px);
     display: inline-block;
 }
 .EditArea .head .title{
@@ -63,16 +62,24 @@
     margin: 0 auto;
     font-size: 16px;
 }
+.EditArea .toolbar{
+    width: 100%;
+    height: 36px;
+    border-bottom: 1px solid #eee;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+}
 .EditArea .content{
     width: 100%;
-    height: calc(100% - 64px);
-    min-height: calc(100% - 64px);
+    height: calc(100% - 100px);
+    min-height: calc(100% - 100px);
     display: flex;
 }
+
 .EditArea .content .scroll-content{
     width: 100%;
 }
-
 .EditArea .content .drag-bar{
     width: 9px;
     background: #eee;
@@ -102,7 +109,7 @@
 }
 
 .EditArea .content .editor .CodeMirror{
-    overflow-y: auto;
+    /*overflow-y: auto;*/
     outline: none;
     border: none;
     width: 100%;
@@ -110,6 +117,7 @@
 }
 .EditArea .content .editor .CodeMirror-scroll{
     overflow-x: hidden !important;
+    min-height: -webkit-fill-available;
 }
 
 .EditArea .content .preview{

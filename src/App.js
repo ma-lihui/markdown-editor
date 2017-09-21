@@ -29,11 +29,7 @@ class App extends Component {
   render() {
     return (
       <Layout style={{minHeight: '100vh'}}>
-        <Header style={{
-          '-webkit-app-region': 'drag',
-          width: '100%',
-          background: '#108ee9'
-        }}>
+        <Header className="header" style={{'-webkit-app-region': 'drag'}}>
           <HeadBar/>
         </Header>
         <Layout style={{background: '#fff'}}>

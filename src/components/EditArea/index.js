@@ -3,10 +3,12 @@ import {connect} from 'react-redux';
 import {saveFile} from '../../actions'
 import marked from 'marked';
 // import Highlight from 'highlight'
+import Scrollbar from 'smooth-scrollbar';
 
 import CodeMirror from 'codemirror';
 require("codemirror/mode/markdown/markdown");
 require("codemirror/mode/javascript/javascript");
+require("codemirror/mode/gfm/gfm.js");
 import './markdown-editor.css'
 import '../../css/github-markdown.css'
 
@@ -30,7 +32,23 @@ class EditArea extends Component {
     this.CodeMirror.setValue(nextProps.activeFile.content || '');
   }
   componentDidMount(){
-     this.CodeMirror = CodeMirror.fromTextArea(this.textarea, {
+    this.editorScroll = Scrollbar.init(this.editor, {speed: 2, damping: 0.2,});
+    this.previewScroll = Scrollbar.init(this.preview, {speed: 2, damping: 0.2,});
+
+    let editorScrollListener = (e) => {
+      this.previewScroll.removeListener(previewScrollListener);
+      this.previewScroll.scrollTo(e.offset.x, e.offset.y);
+      this.previewScroll.addListener(previewScrollListener);
+    };
+    let previewScrollListener = (e) => {
+      this.editorScroll.removeListener(editorScrollListener);
+      this.editorScroll.scrollTo(e.offset.x, e.offset.y);
+      this.editorScroll.addListener(editorScrollListener);
+    };
+    this.editorScroll.addListener(editorScrollListener);
+    this.previewScroll.addListener(previewScrollListener);
+
+    this.CodeMirror = CodeMirror.fromTextArea(this.textarea, {
       mode: 'markdown',
       theme: "paper",
       tabSize:  2,
@@ -40,15 +58,29 @@ class EditArea extends Component {
       highlightFormatting: true,
       scrollbarStyle: null,
       lineWrapping: true,
-      // autoRefresh:true,
     });
     this.CodeMirror.setValue(this.props.activeFile.content || '');
     this.CodeMirror.on('change',(instance,changeObj)=>{
       this.setState({
         markdownContent: this.CodeMirror.getValue()
       });
+      this.editorScroll.scrollIntoView(document.getElementsByClassName('CodeMirror-cursor')[0],{
+        offsetTop: 20,
+        onlyScrollIfNeeded: true,
+      });
     });
-    // document.getElementsByClassName('CodeMirror-scroll')[0].setAttribute('data-scrollbar', '');
+    // this.CodeMirror.on('cursorActivity',(instance)=>{
+    //   let selectionDiv = instance.display.selectionDiv;
+    //   console.log(instance);
+    //   console.log(this.editorScroll);
+    //   console.log(820 - selectionDiv.lastChild.offsetTop - selectionDiv.lastChild.offsetHeight + this.editorScroll.scrollTop);
+    //   if(selectionDiv.firstChild && selectionDiv.firstChild.offsetTop - this.editorScroll.scrollTop<20) {
+    //     // this.editorScroll.scrollTo(0,this.editorScroll.scrollTop - 50);
+    //   }
+    //   if(selectionDiv.lastChild && 820 - selectionDiv.lastChild.offsetTop - selectionDiv.lastChild.offsetHeight + this.editorScroll.scrollTop<50) {
+    //     this.editorScroll.scrollTo(0,this.editorScroll.scrollTop + 50);
+    //   }
+    // });
 
   }
 
@@ -122,13 +154,21 @@ class EditArea extends Component {
             <div className="button-wrapper">
               <Button type="primary" onClick={this.saveClickHandle} ghost>保存</Button>
             </div>
-            <div className="toolbar"></div>
           </div>
         </Header>
+        <div className="toolbar">
+          <Button size="small">H1</Button>
+          <Button size="small">B</Button>
+          <Button size="small">I</Button>
+        </div>
         <div ref={(ref)=>this.content=ref} className="content">
-          <div ref={(ref)=>this.editor=ref}  className="editor" data-scrollbar><textarea ref={(ref)=>this.textarea=ref} className="textarea" id="mdEditor" width={200} value={this.state.markdownContent} /></div>
-          <div ref={(ref)=>this.dragbar=ref} className="drag-bar" onMouseDown={this.onMouseDownHandle.bind(this)} onDoubleClick={this.onDoubleClickHandle.bind(this)}/>
-          <div ref={(ref)=>this.preview=ref} data-scrollbar className="preview"><div className="markdown-body" dangerouslySetInnerHTML={{__html: marked(this.state.markdownContent)}} /></div>
+          <scrollbar ref={(ref)=>this.editor=ref}  className="editor">
+            <div><textarea ref={(ref)=>this.textarea=ref} className="textarea" id="mdEditor" width={200} value={this.state.markdownContent} /></div>
+          </scrollbar>
+          <div className="drag-bar" onMouseDown={this.onMouseDownHandle.bind(this)} onDoubleClick={this.onDoubleClickHandle.bind(this)}/>
+          <scrollbar ref={(ref)=>this.preview=ref} className="preview">
+            <div className="markdown-body" dangerouslySetInnerHTML={{__html: marked(this.state.markdownContent)}} />
+          </scrollbar>
         </div>
       </div>
     );

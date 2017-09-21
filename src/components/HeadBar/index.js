@@ -1,33 +1,44 @@
-import React,{Component} from 'react';
-import { Icon } from 'antd';
+import React, {Component} from 'react';
+import {Icon} from 'antd';
 import './index.css'
-export default class HeadBar extends Component{
-  constructor(props){
+
+import {PLATFORM} from '../../constants';
+
+export default class HeadBar extends Component {
+  constructor(props) {
     super(props);
     this.setting.bind(this);
     this.min.bind(this);
     this.max.bind(this);
     this.close.bind(this);
   }
-  setting(){
+
+  setting() {
 
   }
-  min(){
+
+  min() {
     window.require('electron').ipcRenderer.send('minimize-win');
   }
-  max(){
+
+  max() {
     window.require('electron').ipcRenderer.send('maximize-win');
   }
-  close(){
+
+  close() {
     window.require('electron').ipcRenderer.send('close-win');
   }
-  render(){
+
+  render() {
     return (
       <div style={{'-webkit-app-region': 'no-drag'}} onDoubleClick={this.max} className="HeadBar">
-        {/*<Icon className="icon" onClick={this.setting} type="setting"/>*/}
-        <Icon className="icon" onClick={this.min} type="minus"/>
-        <Icon className="icon" onClick={this.max} type="laptop"/>
-        <Icon className="icon" onClick={this.close}  type="close"/>
+        {
+          PLATFORM==='win32'? [
+            <Icon className="icon" key="min" onClick={this.min} type="minus"/>,
+            <Icon className="icon max" key="max" onClick={this.max} type="plus-square-o"/>,
+            <Icon className="icon" key="close" onClick={this.close} type="close"/>,
+          ] :null
+        }
       </div>
     );
   }
