@@ -10,8 +10,8 @@ import './index.css'
 class TreeDirectory extends Component {
   constructor(props){
     super(props);
-    let {setActiveFolder, activeFolderPath} = this.props;
-    setActiveFolder(activeFolderPath);
+    let {setActiveFolder, activeFolderPath, activeFilePath} = this.props;
+    setActiveFolder(activeFolderPath,activeFilePath);
   }
   generateMenu(menus,path=''){
     return menus.map(menu => {
@@ -40,10 +40,10 @@ class TreeDirectory extends Component {
   render() {
     let {data,activeFolderPath} = this.props;
     const menu = (
-      <Menu onClick={this.onMenuSelectHandle}>
+      <Menu className="new-menu" onClick={this.onMenuSelectHandle} selectable={false}>
         {
           CREATE_MENU.map((menu,i)=>{
-            return <Menu.Item key={i}>{menu.name}</Menu.Item>
+            return <Menu.Item key={i}><Icon className="icon" type={menu.icon} />{menu.name}</Menu.Item>
           })
         }
       </Menu>
@@ -61,7 +61,7 @@ class TreeDirectory extends Component {
         <Content>
           <Menu
             defaultSelectedKeys={[activeFolderPath]}
-            defaultOpenKeys={['/我的文件夹/']}
+            defaultOpenKeys={[`/${data[0].name}/`]}
             mode="inline"
             theme="light"
             inlineCollapsed={this.props.sideCollapsed}
@@ -77,8 +77,8 @@ class TreeDirectory extends Component {
 
 const mapStateToProps = (state) => {
   let {data, status} = state;
-  let {sideCollapsed,activeFolderPath} = status;
-  return {data, sideCollapsed,activeFolderPath};
+  let {sideCollapsed,activeFolderPath,activeFilePath} = status;
+  return {data, sideCollapsed,activeFolderPath,activeFilePath};
 };
 const mapDispatchToProps = {
   newFile,

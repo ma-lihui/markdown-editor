@@ -11,7 +11,6 @@
     "antd": "^2.12.8",
     "codemirror": "^5.29.0",
     "highlight": "^0.2.4",
-    "markdown": "^0.5.0",
     "marked": "^0.3.6",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",

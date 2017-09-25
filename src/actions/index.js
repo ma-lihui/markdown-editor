@@ -12,10 +12,11 @@ export function newFolder(folder) {
   };
 }
 
-export function setActiveFolder(path) {
+export function setActiveFolder(path,activeFilePath) {
   return {
     type: 'SET_ACTIVE_FOLDER',
     path,
+    activeFilePath,
   };
 }
 

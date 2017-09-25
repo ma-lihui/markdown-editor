@@ -75,3 +75,7 @@
 .TreeDirectory .sub-menu.ant-menu-submenu-vertical{
     display: none;
 }
+
+.new-menu .icon {
+    margin-right: 6px;
+}

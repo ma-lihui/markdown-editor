@@ -6,7 +6,7 @@ let initState = {
       name: '我的文件夹',
       type: 'folder',
       key: 'myFolder',
-      icon: 'inbox',
+      icon: 'book',
       date: new Date().toLocaleDateString(),
       children: [
         {
@@ -81,6 +81,14 @@ function getActiveFolder(state, action) {
   let files = activeFolderData.filter(f => f.type !== 'folder');
   if (files.length) {
     activeFileData = files[0];
+  }
+  if(action.activeFilePath){
+    activeFolderData.some(f => {
+      if(f.name === action.activeFilePath){
+        activeFileData = f;
+        return true;
+      }
+    });
   }
   activeFileData = activeFileData || {};
   return {activeFolderData, activeFileData, activeFolderPath: action.path, activeFilePath: activeFileData.name};

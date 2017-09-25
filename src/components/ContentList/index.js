@@ -43,7 +43,13 @@ class ContentList extends Component{
               this.props.activeFolder.map(function (n) {
                 return (
                   <Menu.Item key={n.name} className="content-wrapper">
-                    <h3 className="title"><Icon type={n.type==='folder'?'folder':'file'} />{n.name}</h3>
+                    <h3 className="title">
+                      {
+                        n.type==='folder' ?
+                        <a><Icon type="folder" />{n.name}</a>
+                        : <span><Icon type="file-text" />{n.name}</span>
+                      }
+                    </h3>
                     <div className="detail">{n.content}</div>
                     <p>{n.date}</p>
                   </Menu.Item>

@@ -47,3 +47,9 @@ body{
     background: -ms-linear-gradient(45deg, rgba(5,118,255,1) 0%, rgba(36,248,255,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0576ff', endColorstr='#24f8ff', GradientType=1 );
 }
+.header .title{
+    color: #fff
+}
+.header .title .icon{
+    margin: 0 14px
+}

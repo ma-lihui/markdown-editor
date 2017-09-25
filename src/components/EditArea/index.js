@@ -53,7 +53,7 @@ class EditArea extends Component {
       theme: "paper",
       tabSize:  2,
       indentUnit:  2,
-      lineNumbers: false,
+      // lineNumbers: true,
       allowDropFileTypes: ['text/plain','text/x-markdown'],
       highlightFormatting: true,
       scrollbarStyle: null,
@@ -156,11 +156,7 @@ class EditArea extends Component {
             </div>
           </div>
         </Header>
-        <div className="toolbar">
-          <Button size="small">H1</Button>
-          <Button size="small">B</Button>
-          <Button size="small">I</Button>
-        </div>
+        <div className="toolbar"></div>
         <div ref={(ref)=>this.content=ref} className="content">
           <scrollbar ref={(ref)=>this.editor=ref}  className="editor">
             <div><textarea ref={(ref)=>this.textarea=ref} className="textarea" id="mdEditor" width={200} value={this.state.markdownContent} /></div>

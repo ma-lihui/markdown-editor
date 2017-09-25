@@ -8,7 +8,7 @@ import HeadBar from './components/HeadBar'
 import TreeDirectory from './components/TreeDirectory'
 import ContentList from './components/ContentList'
 import EditArea from './components/EditArea'
-import { Layout } from 'antd';
+import { Layout, Icon } from 'antd';
 import 'smooth-scrollbar/dist/smooth-scrollbar.css'
 
 const {Header, Content, Sider} = Layout;
@@ -30,6 +30,7 @@ class App extends Component {
     return (
       <Layout style={{minHeight: '100vh'}}>
         <Header className="header" style={{'-webkit-app-region': 'drag'}}>
+          <h1 className="title"><Icon className="icon" type="edit" />Markdown Editor</h1>
           <HeadBar/>
         </Header>
         <Layout style={{background: '#fff'}}>
