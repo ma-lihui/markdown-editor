@@ -137,16 +137,29 @@ function newFile(state, action) {
   if(action.file.type === 'folder'){
     file = {...file,icon:'folder',children:[]};
   }
-  activeFolderData.push(file);
-  newState.activeFile = file;
-  newState.activeFolder.push(file);
+  newState.activeFile = file;  
   newState.status.activeFilePath = file.name;
+  if(file.type==='folder'){
+    activeFolderData.unshift(file);
+    newState.activeFolder.unshift(file);
+  }else{
+    activeFolderData.push(file);
+    newState.activeFolder.push(file);
+  }
   return newState;
 }
 
 function newFolder(state, action) {
 }
 
+function deleteFile(state, action) {
+  let newState = JSON.parse(JSON.stringify(state));
+  let {activeFolderData} = getActiveFolder(newState, {path: state.status.activeFolderPath});
+  const {key} = action;
+  newState.activeFolder.splice(key, 1);
+  activeFolderData.splice(key, 1);
+  return newState;
+}
 export default function indexReducer(state = initState, action) {
   let newState = {...state};
   switch (action.type) {
@@ -179,6 +192,9 @@ export default function indexReducer(state = initState, action) {
       break;
     case 'SAVE_FILE':
       newState = saveFile(state, action);
+      break;
+    case 'DELETE_FILE':
+      newState = deleteFile(state, action);
       break;
   }
   setItem('store', newState);

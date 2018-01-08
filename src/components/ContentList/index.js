@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {setActiveFolder, setActiveFile} from '../../actions';
+import {setActiveFolder, setActiveFile, deleteFile} from '../../actions';
 
 import { Input, Icon, Layout, Menu, Dropdown } from 'antd';
 const {Header, Content, Footer } = Layout;
@@ -11,8 +11,23 @@ class ContentList extends Component{
   onSelectHandle = ({key}) => {
     this.props.setActiveFile(key);
   };
+  onFileMenuSelectHandle = ({key})=>{
+    this.props.deleteFile(key);
+  };
+  setActiveFolderHandle = (folderName, i)=>{
+    this.props.setActiveFolder(`${this.props.activeFolderPath}/${folderName}`);
+  }
+  backFolder = ()=>{
+    let pathArr = this.props.activeFolderPath.split('/');
+    pathArr.pop();
+    if(pathArr.length>1){
+      this.props.setActiveFolder(pathArr.join('/'))
+    }
+  }
   render(){
     let {activeFolderPath,activeFilePath} = this.props;
+    let pathArr = activeFolderPath.split('/');
+    pathArr.pop();
     const menu = (
       <Menu>
         <Menu.Item key="0">创建时间</Menu.Item>
@@ -21,34 +36,45 @@ class ContentList extends Component{
         <Menu.Item key="3">文件大小</Menu.Item>
       </Menu>
     );
+
     return (
       <Layout style={{background: '#fff'}} className="ContentList">
         <Header className="head">
-          <Icon className="left-icon" type="rollback" />
+          <a onClick={this.backFolder} className={pathArr.length>1?'back-folder':'back-folder disable'}><Icon className="left-icon" type="rollback"/></a>
           <Search
             className="Search"
             placeholder="input search text"
             onSearch={value => console.log(value)}
           />
           <Dropdown overlay={menu} trigger={['click']}>
-            <span className="ant-dropdown-link">
+            <a className="ant-dropdown-link">
               <Icon className="icon bars" type="bars" />
               {/*<Icon className="icon caret-down" type="caret-down" />*/}
-            </span>
+            </a>
           </Dropdown>
         </Header>
         <Content data-scrollbar>
           <Menu onSelect={this.onSelectHandle} selectedKeys={[activeFilePath]} className="menu-list">
             {
-              this.props.activeFolder.map(function (n) {
+              this.props.activeFolder.map((n,i)=>{
+                const fileMenu = (
+                  <Menu onClick={this.onFileMenuSelectHandle} selectable={false}>
+                    <Menu.Item key={i}>删除</Menu.Item>
+                  </Menu>
+                )
                 return (
                   <Menu.Item key={n.name} className="content-wrapper">
                     <h3 className="title">
                       {
                         n.type==='folder' ?
-                        <a><Icon type="folder" />{n.name}</a>
+                        <span><a onClick={()=>{this.setActiveFolderHandle(n.name, i)}}><Icon type="folder" />{n.name}</a></span>
                         : <span><Icon type="file-text" />{n.name}</span>
                       }
+                      <Dropdown overlay={fileMenu} trigger={['click']}>
+                        <a className="ant-dropdown-link popup-trigger" href="#">
+                          <Icon type="ellipsis" />
+                        </a>
+                      </Dropdown>
                     </h3>
                     <div className="detail">{n.content}</div>
                     <p>{n.date}</p>
@@ -72,6 +98,8 @@ const mapStateToProps = (state) => {
   return { activeFolder, activeFolderPath, activeFilePath };
 };
 const mapDispatchToProps = {
-  setActiveFile
+  setActiveFolder,  
+  setActiveFile,
+  deleteFile,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ContentList);

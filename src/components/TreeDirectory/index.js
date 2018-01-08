@@ -66,6 +66,7 @@ class TreeDirectory extends Component {
             theme="light"
             inlineCollapsed={this.props.sideCollapsed}
             onSelect={this.onSelectHandle}
+            selectedKeys={[activeFolderPath]}
             className="menu-list">
             {this.generateMenu(data)}
           </Menu>

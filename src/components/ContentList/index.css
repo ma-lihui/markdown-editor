@@ -17,6 +17,10 @@
     padding: 0 10px;
     border-bottom: 1px solid #eee;
 }
+.ContentList .head .back-folder.disable{
+    opacity: 0.3;
+    cursor: default;
+}
 .ContentList .head .left-icon{
     width: 50px;
     margin: 0 auto;
@@ -53,8 +57,22 @@
 .ContentList .menu-list .title{
     font-weight: 400;
     font-size: 1.3em;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-
+.ContentList .menu-list .title span{
+    display: inline-block;
+    width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.ContentList .menu-list .popup-trigger{
+    float: right;
+    color: #aaa;
+}
+.ContentList .menu-list .popup-trigger:hover{
+    color: #108ee9;
+}
 .ContentList .menu-list .detail {
     color: #777;
     width: 100%;

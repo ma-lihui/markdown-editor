@@ -40,3 +40,10 @@ export function saveFile(data) {
     data: data,
   };
 }
+
+export function deleteFile(key) {
+  return {
+    type: 'DELETE_FILE',
+    key,
+  };
+}
