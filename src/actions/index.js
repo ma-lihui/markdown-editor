@@ -47,3 +47,10 @@ export function deleteFile(key) {
     key,
   };
 }
+
+export function collectFile(key) {
+  return {
+    type: 'COLLECT_FILE',
+    key,
+  };
+}

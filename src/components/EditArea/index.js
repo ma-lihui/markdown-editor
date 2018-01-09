@@ -19,9 +19,10 @@ import './index.css'
 class EditArea extends Component {
   constructor(props) {
     super(props);
+    let {activeFile} = this.props;
     this.state = {
-      title: this.props.activeFile.name || '',
-      markdownContent: this.props.activeFile.content || ''
+      title: activeFile.name || '',
+      markdownContent: activeFile.content || ''
     };
   }
   componentWillReceiveProps(nextProps){

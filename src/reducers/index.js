@@ -97,7 +97,7 @@ function getActiveFile(state, action) {
   return {
     ...state,
     status: {...state.status, activeFilePath: action.file},
-    activeFile: state.activeFolder.filter(f => f.name === action.file)[0]
+    activeFile: state.activeFolder.filter(f => f.name === action.file)[0] || {}
   };
 }
 function saveFile(state, action) {

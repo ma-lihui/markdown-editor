@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {setActiveFolder, setActiveFile, deleteFile} from '../../actions';
+import {setActiveFolder, setActiveFile, deleteFile, collectFile} from '../../actions';
 
 import { Input, Icon, Layout, Menu, Dropdown } from 'antd';
 const {Header, Content, Footer } = Layout;
@@ -12,7 +12,7 @@ class ContentList extends Component{
     this.props.setActiveFile(key);
   };
   onFileMenuSelectHandle = ({key})=>{
-    this.props.deleteFile(key);
+    // this.props.deleteFile(key);
   };
   setActiveFolderHandle = (folderName, i)=>{
     this.props.setActiveFolder(`${this.props.activeFolderPath}/${folderName}`);
@@ -25,7 +25,7 @@ class ContentList extends Component{
     }
   }
   render(){
-    let {activeFolderPath,activeFilePath} = this.props;
+    let {activeFolderPath, activeFilePath, deleteFile, collectFile} = this.props;
     let pathArr = activeFolderPath.split('/');
     pathArr.pop();
     const menu = (
@@ -59,7 +59,8 @@ class ContentList extends Component{
               this.props.activeFolder.map((n,i)=>{
                 const fileMenu = (
                   <Menu onClick={this.onFileMenuSelectHandle} selectable={false}>
-                    <Menu.Item key={i}>删除</Menu.Item>
+                    {/* <Menu.Item><div onClick={()=>collectFile(i)}><Icon type='star'/>收藏</div></Menu.Item> */}
+                    <Menu.Item><div onClick={()=>deleteFile(i)}><Icon type='delete'/> 删除</div></Menu.Item>
                   </Menu>
                 )
                 return (
@@ -101,5 +102,6 @@ const mapDispatchToProps = {
   setActiveFolder,  
   setActiveFile,
   deleteFile,
+  collectFile,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ContentList);
