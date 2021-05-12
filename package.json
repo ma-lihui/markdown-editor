@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "antd": "^2.12.8",
-    "codemirror": "^5.29.0",
+    "codemirror": "^5.58.2",
     "highlight": "^0.2.4",
     "marked": "^0.3.6",
     "react": "^15.4.2",
